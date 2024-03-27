@@ -1,0 +1,20 @@
+Yes, the Pig Latin script  involve MapReduce jobs. Let's break down each step and see how it's processed:
+
+1. **Load Data**: 
+   - The `LOAD` statement loads data from the specified file `test.csv` using the `PigStorage` function, which reads data in CSV format.
+   - This operation will involve a MapReduce job to read the data from the file and distribute it across the cluster.
+
+2. **Process Data (Filtering)**: 
+   - The `FILTER` statement filters the loaded data to select only the rows where the event is 'overspeed'.
+   - This operation will involve a MapReduce job to distribute the filtering operation across the cluster.
+
+3. **Process Data (Calculating Average)**:
+   - The `FOREACH` statement processes each row of the loaded data to calculate the average velocity grouped by truckid.
+   - The `AVG` function calculates the average velocity for each group.
+   - This operation will involve a MapReduce job to distribute the calculation of average velocity across the cluster.
+
+4. **Store Results**:
+   - The `STORE` statement stores the filtered overspeed data and the calculated average velocity data into separate output files.
+   - This operation will involve a MapReduce job to write the results to the specified output files.
+
+So, yes, each step in your Pig Latin script involves MapReduce jobs. Pig translates your script into a series of MapReduce jobs to execute the data processing tasks in a distributed manner across the Hadoop cluster.
