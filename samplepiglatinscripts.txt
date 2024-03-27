@@ -1,0 +1,15 @@
+-- 1. Load Data: Load data from test.csv
+data = LOAD 'test.csv' USING PigStorage(',') 
+       AS (truckid:chararray, driverid:chararray, event:chararray, 
+           latitude:double, longitude:double, city:chararray, 
+           state:chararray, velocity:int, event_ind:int, idling_ind:int);
+
+-- 2. Process Data: Example query to filter out overspeed events
+overspeed_data = FILTER data BY event == 'overspeed';
+
+-- Example query to calculate average velocity
+avg_velocity = FOREACH data GENERATE truckid, AVG(velocity) AS avg_velocity;
+
+-- 3. Store Results: Store the processed data
+STORE overspeed_data INTO 'overspeed_output' USING PigStorage(',');
+STORE avg_velocity INTO 'avg_velocity_output' USING PigStorage(',');
